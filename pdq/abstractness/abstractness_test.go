@@ -31,11 +31,11 @@ func TestAbstractness(t *testing.T) {
 			got, err := CalcAbstractness(tc.abstractElementsNum, tc.concreteElementsNum)
 
 			if got != tc.expected {
-				t.Errorf("Result(%v) and expected result(%v) don't match", got, tc.expected)
+				t.Fatalf("%v failed: results don't match. CalcAbstractness(%v, %v) == %v. Expected: %v", tc.name, tc.abstractElementsNum, tc.concreteElementsNum, got, tc.expected)
 			}
 
 			if err != nil && err.Error() != tc.expectedError.Error() {
-				t.Errorf("Errors don't match. \nError: %v. \nExpected error: %v", err, tc.expectedError)
+				t.Fatalf("%v failed: errors don't match. Error: %v. Expected error: %v", tc.name, err, tc.expectedError)
 			}
 		})
 	}
