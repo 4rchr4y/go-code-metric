@@ -6,22 +6,6 @@ import (
 )
 
 func CalcDMS(abstractness float64, instability float64) (float64, error) {
-	if math.IsNaN(abstractness) {
-		return -1, errors.New("abstractness is NaN")
-	}
-
-	if math.IsNaN(instability) {
-		return -1, errors.New("instability is NaN")
-	}
-
-	if math.IsInf(abstractness, 0) {
-		return -1, errors.New("abstractness is infinite")
-	}
-
-	if math.IsInf(instability, 0) {
-		return -1, errors.New("instability is infinite")
-	}
-
 	if abstractness < 0 {
 		return -1, errors.New("abstractness cannot be lesser than 0")
 	}
