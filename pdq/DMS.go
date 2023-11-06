@@ -1,4 +1,4 @@
-package DMS
+package pdq
 
 import (
 	"errors"

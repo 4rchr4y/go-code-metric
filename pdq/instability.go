@@ -1,4 +1,4 @@
-package instability
+package pdq
 
 import (
 	"errors"

@@ -1,4 +1,4 @@
-package abstractness
+package pdq
 
 import (
 	"errors"
