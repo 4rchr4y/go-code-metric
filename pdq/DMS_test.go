@@ -6,7 +6,7 @@ import (
 )
 
 func TestDMS(t *testing.T) {
-	t.Run("Valid: values at lower bound", func(t *testing.T) {
+	t.Run("valid: values at lower bound", func(t *testing.T) {
 		expected := 1.0
 		got, _ := CalcDMS(0, 0)
 
@@ -15,7 +15,7 @@ func TestDMS(t *testing.T) {
 		}
 	})
 
-	t.Run("Valid: values at upper bound", func(t *testing.T) {
+	t.Run("valid: values at upper bound", func(t *testing.T) {
 		expected := 1.0
 		got, _ := CalcDMS(1, 1)
 
@@ -24,7 +24,7 @@ func TestDMS(t *testing.T) {
 		}
 	})
 
-	t.Run("Valid: equal values", func(t *testing.T) {
+	t.Run("valid: equal values", func(t *testing.T) {
 		expected := 0.0
 		got, _ := CalcDMS(0.5, 0.5)
 
@@ -33,7 +33,7 @@ func TestDMS(t *testing.T) {
 		}
 	})
 
-	t.Run("Valid: complimentary values", func(t *testing.T) {
+	t.Run("valid: complimentary values", func(t *testing.T) {
 		expected := 0.0
 		got, _ := CalcDMS(0.25, 0.75)
 
@@ -42,7 +42,7 @@ func TestDMS(t *testing.T) {
 		}
 	})
 
-	t.Run("Valid: arbitrary values", func(t *testing.T) {
+	t.Run("valid: arbitrary values", func(t *testing.T) {
 		expected := 0.7
 		got, _ := CalcDMS(0.1, 0.2)
 
@@ -51,7 +51,7 @@ func TestDMS(t *testing.T) {
 		}
 	})
 
-	t.Run("Valid: near-equal values", func(t *testing.T) {
+	t.Run("valid: near-equal values", func(t *testing.T) {
 		expected := 0.0
 		got, _ := CalcDMS(0.50000000000001, 0.49999999999999)
 
