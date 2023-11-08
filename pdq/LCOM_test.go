@@ -1,33 +1,97 @@
 package pdq
 
 import (
+	"math"
 	"testing"
 )
 
 func TestCalcLCOM(t *testing.T) {
-	testCases := []struct {
-		name                    string
-		nonSharedAttributePairs int
-		sharedAttributePairs    int
-		expected                int
-	}{
-		{"More non-shared than shared attribute pairs", 10, 5, 5},
-		{"More shared than non-shared attribute pairs", 5, 10, 0},
-		{"Equal shared and non-shared attribute pairs", 5, 5, 0},
-		{"Zero non-shared attribute pairs", 0, 5, 0},
-		{"Zero shared attribute pairs", 5, 0, 5},
-		{"Both pairs are zero", 0, 0, 0},
-		{"Negative non-shared attribute pairs", -5, 0, 5},
-		{"Negative shared attribute pairs", 0, -5, 0},
-	}
+	t.Run("valid: more non-shared than shared attribute pairs", func(t *testing.T) {
+		expected := 5
+		got := CalcLCOM(10, 5)
 
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			got := CalcLCOM(tc.nonSharedAttributePairs, tc.sharedAttributePairs)
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 
-			if got != tc.expected {
-				t.Fatalf("%v failed: results don't match. CalcDMS(%v, %v) == %v, expected %v", tc.name, tc.nonSharedAttributePairs, tc.sharedAttributePairs, got, tc.expected)
-			}
-		})
-	}
+	t.Run("valid: more shared than non-shared attribute pairs", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(5, 10)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+	t.Run("valid: equal shared and non-shared attribute pairs", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(5, 5)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: zero non-shared attribute pairs", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(0, 5)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: zero shared attribute pairs", func(t *testing.T) {
+		expected := 5
+		got := CalcLCOM(5, 0)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: both pairs are zero", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(0, 0)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: negative non-shared attribute pairs", func(t *testing.T) {
+		expected := 5
+		got := CalcLCOM(-5, 0)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: negative shared attribute pairs", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(0, -5)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: both pairs are math.MaxInt", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(math.MaxInt, math.MaxInt)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: both pairs are -math.MaxInt", func(t *testing.T) {
+		expected := 0
+		got := CalcLCOM(-math.MaxInt, -math.MaxInt)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 }
