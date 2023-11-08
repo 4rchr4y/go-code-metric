@@ -1,14 +1,17 @@
 package pdq
 
-import "math"
+import (
+	"fmt"
+)
 
-func CalcLCOM(nonSharedAttributePairs int, sharedAttributePairs int) int {
-	absoluteNonSharedPairs := math.Abs(float64(nonSharedAttributePairs))
-	absoluteSharedPair := math.Abs(float64(sharedAttributePairs))
-
-	if absoluteNonSharedPairs >= absoluteSharedPair {
-		return int(absoluteNonSharedPairs - absoluteSharedPair)
+func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
+	if nonSharedFields < 0 || sharedFields < 0 {
+		return -1, fmt.Errorf("nonSharedFields %v, nonSharedFields %v; values must be >= 0", nonSharedFields, sharedFields)
 	}
 
-	return 0
+	if nonSharedFields > sharedFields {
+		return nonSharedFields - sharedFields, nil
+	}
+
+	return 0, nil
 }
