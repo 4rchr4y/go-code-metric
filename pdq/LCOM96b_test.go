@@ -1,55 +1,180 @@
 package pdq
 
 import (
-	"errors"
+	"fmt"
 	"testing"
 )
 
 func TestCalcLCOM96b(t *testing.T) {
-	testCases := []struct {
-		name                string
-		attributesNum       int
-		methodsNum          int
-		methodsPerAttribute []int
-		expected            float64
-		expectedError       error
-	}{
-		{"ValidInput1", 3, 3, []int{3, 1, 1}, 0.4444444444444444, nil},
-		{"ValidInput2", 3, 3, []int{1, 1, 1}, 0.6666666666666666, nil},
-		{"ValidInput3", 3, 3, []int{2, 2, 1}, 0.4444444444444444, nil},
-		{"ValidInput4", 3, 3, []int{2, 1, 2}, 0.4444444444444444, nil},
-		{"ValidInput5", 3, 3, []int{1, 2, 2}, 0.4444444444444444, nil},
+	t.Run("valid: input 1", func(t *testing.T) {
+		expected := 0.4444444444444444
+		got, _ := CalcLCOM96b(3, 3, []int{3, 1, 1})
 
-		{"InvalidMethodsPerAttributeExceedsTotal", 3, 3, []int{99, 1, 1}, -1, errors.New("invalid number of methods for attribute at index 1: 99; should be less or equal to the total number of methods: 3")},
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+	t.Run("valid: input 2", func(t *testing.T) {
+		expected := 0.6666666666666666
+		got, _ := CalcLCOM96b(3, 3, []int{1, 1, 1})
 
-		{"AllMethodsAccessesAttributes", 3, 3, []int{3, 3, 3}, 0, nil},
-		{"NoMethodAccessesAttributes", 3, 3, []int{0, 0, 0}, 1, nil},
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+	t.Run("valid: input 3", func(t *testing.T) {
+		expected := 0.4444444444444444
+		got, _ := CalcLCOM96b(3, 3, []int{2, 2, 1})
 
-		{"LowNumOfAttributesAndHighNumOfMethods", 1, 9, []int{9}, 0, nil},
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 
-		{"AttributeCountMismatch", 2, 3, []int{1, 2, 1}, -1, errors.New("mismatch in numbers: attributesNum is 2 but methodsPerAttribute has 3 elements; they should be equal")},
+	t.Run("valid: input 4", func(t *testing.T) {
+		expected := 0.4444444444444444
+		got, _ := CalcLCOM96b(3, 3, []int{2, 1, 2})
 
-		{"NoAttributes", 0, 3, []int{}, 1, nil},
-		{"NoMethods", 3, 0, []int{}, 1, nil},
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 
-		{"NegativeAttributes", -1, 3, []int{}, -1, errors.New("invalid number of attributes: -1; It shouldn't be negative")},
-		{"NegativeMethods", 3, -1, []int{}, -1, errors.New("invalid number of methods: -1; It shouldn't be negative")},
+	t.Run("valid: input 5", func(t *testing.T) {
+		expected := 0.4444444444444444
+		got, _ := CalcLCOM96b(3, 3, []int{1, 2, 2})
 
-		{"NegativeValueInMethodsPerAttribute1", 3, 3, []int{-1, 0, 0}, -1, errors.New("invalid number of methods for attribute at index 1: -1; should be at least 0")},
-		{"NegativeValueInMethodsPerAttribute2", 3, 3, []int{0, 0, -1}, -1, errors.New("invalid number of methods for attribute at index 3: -1; should be at least 0")},
-	}
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			got, err := CalcLCOM96b(tc.attributesNum, tc.methodsNum, tc.methodsPerAttribute)
+	t.Run("valid: all methods accesses attributes", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcLCOM96b(3, 3, []int{3, 3, 3})
 
-			if got != tc.expected {
-				t.Fatalf("%v failed: results don't match. CalcLCOM96b(%v, %v, %v) == %v, expected %v", tc.name, tc.attributesNum, tc.methodsNum, tc.methodsPerAttribute, got, tc.expected)
-			}
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 
-			if err != nil && err.Error() != tc.expectedError.Error() {
-				t.Fatalf("%v failed: errors don't match. Error: %v. Expected error: %v", tc.name, err, tc.expectedError)
-			}
-		})
-	}
+	t.Run("valid: no method accesses attributes", func(t *testing.T) {
+		expected := 1.0
+		got, _ := CalcLCOM96b(3, 3, []int{0, 0, 0})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: low num of attributes and high num of methods", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcLCOM96b(1, 9, []int{9})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: no attributes", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcLCOM96b(0, 3, []int{})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: no methods", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcLCOM96b(3, 0, []int{})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("invalid: attribute count mismatch", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("mismatch in numbers: attributesNum: %v is not equal to methodsPerAttribute: %v", 2, 3)
+		got, err := CalcLCOM96b(2, 3, []int{1, 2, 1})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: negative attributes", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: attributesNum %v, methodsNum %v; values must not be less than 0", -1, 3)
+		got, err := CalcLCOM96b(-1, 3, []int{})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: negative methods", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: attributesNum %v, methodsNum %v; values must not be less than 0", 3, -1)
+		got, err := CalcLCOM96b(3, -1, []int{})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: negative value in methods per attribute slice 1", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid number of methods for attribute at index 0: -1; should be at least 0")
+		got, err := CalcLCOM96b(3, 3, []int{-1, 0, 0})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: negative value in methods per attribute slice 2", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid number of methods for attribute at index 2: -1; should be at least 0")
+		got, err := CalcLCOM96b(3, 3, []int{0, 0, -1})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: invalid methods per attribute exceeds total", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("too many methods for attribute at index %d: %d; there are only %d methods", 0, 99, 3)
+		got, err := CalcLCOM96b(3, 3, []int{99, 1, 1})
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
 }

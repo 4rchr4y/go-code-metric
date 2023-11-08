@@ -5,35 +5,31 @@ import (
 )
 
 func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (float64, error) {
-	if attributesNum < 0 {
-		return -1, fmt.Errorf("invalid number of attributes: %d; It shouldn't be negative", attributesNum)
-	}
-
-	if methodsNum < 0 {
-		return -1, fmt.Errorf("invalid number of methods: %d; It shouldn't be negative", methodsNum)
+	if attributesNum < 0 || methodsNum < 0 {
+		return -1, fmt.Errorf("invalid metric value: attributesNum %v, methodsNum %v; values must not be less than 0", attributesNum, methodsNum)
 	}
 
 	if attributesNum == 0 || methodsNum == 0 {
-		return 1, nil
+		return 0, nil
 	}
 
 	if attributesNum != len(methodsPerAttribute) {
-		return -1, fmt.Errorf("mismatch in numbers: attributesNum is %d but methodsPerAttribute has %d elements; they should be equal", attributesNum, len(methodsPerAttribute))
+		return -1, fmt.Errorf("mismatch in numbers: attributesNum: %v is not equal to methodsPerAttribute: %v", attributesNum, len(methodsPerAttribute))
 	}
 
-	methodsDifferenceSum := 0.0
+	methodsDifferenceSum := 0
 	for i, methodsForAttribute := range methodsPerAttribute {
 		if methodsForAttribute < 0 {
-			return -1, fmt.Errorf("invalid number of methods for attribute at index %d: %d; should be at least 0", i+1, methodsForAttribute)
+			return -1, fmt.Errorf("invalid number of methods for attribute at index %d: %d; should be at least 0", i, methodsForAttribute)
 		}
 		if methodsForAttribute > methodsNum {
-			return -1, fmt.Errorf("invalid number of methods for attribute at index %d: %d; should be less or equal to the total number of methods: %d", i+1, methodsForAttribute, methodsNum)
+			return -1, fmt.Errorf("too many methods for attribute at index %d: %d; there are only %d methods", i, methodsForAttribute, methodsNum)
 		}
 
-		methodsDifferenceSum += float64(methodsNum - methodsForAttribute)
+		methodsDifferenceSum += methodsNum - methodsForAttribute
 	}
 
-	lcom96b := (1.0 / float64(attributesNum)) * methodsDifferenceSum / float64(methodsNum)
+	lcom96b := float64(methodsDifferenceSum) / (float64(attributesNum * methodsNum))
 
 	return lcom96b, nil
 }
