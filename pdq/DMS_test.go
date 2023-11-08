@@ -1,42 +1,146 @@
 package pdq
 
 import (
-	"errors"
-	"math"
+	"fmt"
 	"testing"
 )
 
 func TestDMS(t *testing.T) {
-	tests := []struct {
-		name          string
-		abstractness  float64
-		instability   float64
-		expected      float64
-		expectedError error
-	}{
-		{"Values at lower bound", 0, 0, 1, nil},
-		{"Values at upper bound", 1, 1, 1, nil},
-		{"Both values at equilibrium", 0.5, 0.5, 0, nil},
-		{"Complimentary values", 0.25, 0.75, 0, nil},
-		{"Arbitrary values", 0.1, 0.2, 0.7, nil},
-		{"Near-equal values", 0.50000000000001, 0.49999999999999, 0, nil},
-		{"Extreme large values", 1e308, 1e308, math.Inf(1), nil},
-		{"Negative abstractness", -1, 1, -1, errors.New("abstractness cannot be lesser than 0")},
-		{"Negative instability", 1, -1, -1, errors.New("instability cannot be lesser than 0")},
-		{"Extreme small values", -1e308, -1e308, -1, errors.New("abstractness cannot be lesser than 0")},
-	}
+	t.Run("Valid: values at lower bound", func(t *testing.T) {
+		expected := 1.0
+		got, _ := CalcDMS(0, 0)
 
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			got, err := CalcDMS(tc.abstractness, tc.instability)
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+	})
 
-			if got != tc.expected {
-				t.Fatalf("%v failed: results don't match. CalcDMS(%v, %v) == %v, expected %v", tc.name, tc.abstractness, tc.instability, got, tc.expected)
-			}
+	t.Run("Valid: values at upper bound", func(t *testing.T) {
+		expected := 1.0
+		got, _ := CalcDMS(1, 1)
 
-			if err != nil && err.Error() != tc.expectedError.Error() {
-				t.Fatalf("%v failed: errors don't match. Error: %v. Expected error: %v", tc.name, err, tc.expectedError)
-			}
-		})
-	}
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("Valid: equal values", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcDMS(0.5, 0.5)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("Valid: complimentary values", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcDMS(0.25, 0.75)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("Valid: arbitrary values", func(t *testing.T) {
+		expected := 0.7
+		got, _ := CalcDMS(0.1, 0.2)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("Valid: near-equal values", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcDMS(0.50000000000001, 0.49999999999999)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("Invalid: negative abstractness", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", -1, 1)
+		got, err := CalcDMS(-1, 1)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("Invalid: negative instability", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", 1, -1)
+		got, err := CalcDMS(1, -1)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("Invalid: abstractness is 1e308", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be lesser than infinity", 1e308, 0)
+		got, err := CalcDMS(1e308, 0)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("Invalid: instability is 1e308", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be lesser than infinity", 0, 1e308)
+		got, err := CalcDMS(0, 1e308)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("Invalid: abstractness is -1e308", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", -1e308, 0)
+		got, err := CalcDMS(-1e308, 0)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("Invalid: instability is -1e308", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", 0, -1e308)
+		got, err := CalcDMS(0, -1e308)
+
+		if got != expected {
+			t.Errorf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
 }
