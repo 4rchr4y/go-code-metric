@@ -1,42 +1,123 @@
 package pdq
 
 import (
-	"errors"
+	"fmt"
 	"math"
 	"testing"
 )
 
 func TestInstability(t *testing.T) {
-	tests := []struct {
-		name                    string
-		outgoingDependenciesNum int
-		incomingDependenciesNum int
-		expected                float64
-		expectedError           error
-	}{
-		{"PositiveNumbers", 10, 20, 0.3333333333333333, nil},
-		{"ZeroAbstractNumber", 0, 20, 0, nil},
-		{"ZeroConcreteNumber", 10, 0, 0, nil},
-		{"NegativeAbstractNumber", -1, 1, -1, errors.New("the number of outgoing dependencies must not be a negative number")},
-		{"NegativeConcreteNumber", 1, -1, -1, errors.New("the number of incoming dependencies must not be a negative number")},
-		{"BothNumbersNegative", -10, -20, -1, errors.New("the number of outgoing dependencies must not be a negative number")},
-		{"LargeNumbers", math.MaxInt32, math.MaxInt32, 0.5, nil},
-		{"AbstractGreaterThanConcrete", 30, 10, 0.75, nil},
-		{"ConcreteGreaterThanAbstract", 10, 30, 0.25, nil},
-		{"EqualNumbers", 20, 20, 0.5, nil},
-	}
+	t.Run("valid: positive numbers", func(t *testing.T) {
+		expected := 0.3333333333333333
+		got, _ := CalcInstability(5, 10)
 
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			got, err := CalcInstability(tc.outgoingDependenciesNum, tc.incomingDependenciesNum)
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
 
-			if got != tc.expected {
-				t.Fatalf("%v failed: results don't match. CalcInstability(%v, %v)== %v. Expected: %v", tc.name, tc.outgoingDependenciesNum, tc.incomingDependenciesNum, got, tc.expected)
-			}
+	t.Run("valid: zero abstract", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcInstability(0, 20)
 
-			if err != nil && err.Error() != tc.expectedError.Error() {
-				t.Fatalf("%v failed: errors don't match. Error: %v. Expected error: %v", tc.name, err, tc.expectedError)
-			}
-		})
-	}
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: zero concrete", func(t *testing.T) {
+		expected := 1.0
+		got, _ := CalcInstability(10, 0)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: both values are zero", func(t *testing.T) {
+		expected := 0.0
+		got, _ := CalcInstability(0, 0)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: math.MaxInt32 values", func(t *testing.T) {
+		expected := 0.5
+		got, _ := CalcInstability(math.MaxInt32, math.MaxInt32)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: abstract greater than concrete", func(t *testing.T) {
+		expected := 0.75
+		got, _ := CalcInstability(30, 10)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: concrete greater than concrete", func(t *testing.T) {
+		expected := 0.25
+		got, _ := CalcInstability(10, 30)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("valid: equal numbers", func(t *testing.T) {
+		expected := 0.5
+		got, _ := CalcInstability(20, 20)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+	})
+
+	t.Run("invalid: negative abstract", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: outgoingDependenciesNum %v, incomingDependenciesNum %v; values must not be less than 0", -1, 1)
+		got, err := CalcInstability(-1, 1)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: negative concrete", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: outgoingDependenciesNum %v, incomingDependenciesNum %v; values must not be less than 0", 1, -1)
+		got, err := CalcInstability(1, -1)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
+
+	t.Run("invalid: both numbers are negative", func(t *testing.T) {
+		expected := -1.0
+		expectedErr := fmt.Errorf("invalid metric value: outgoingDependenciesNum %v, incomingDependenciesNum %v; values must not be less than 0", -1, -1)
+		got, err := CalcInstability(-1, -1)
+
+		if got != expected {
+			t.Fatalf("got %v, expected %v", got, expected)
+		}
+
+		if err.Error() != expectedErr.Error() {
+			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
+		}
+	})
 }
