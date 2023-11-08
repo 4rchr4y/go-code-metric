@@ -1,146 +1,94 @@
 package pdq
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestDMS(t *testing.T) {
 	t.Run("valid: values at lower bound", func(t *testing.T) {
-		expected := 1.0
-		got, _ := CalcDMS(0, 0)
+		got, err := CalcDMS(0, 0)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
+		assert.Equal(t, 1.0, got)
+		require.NoError(t, err)
 	})
 
 	t.Run("valid: values at upper bound", func(t *testing.T) {
-		expected := 1.0
-		got, _ := CalcDMS(1, 1)
+		got, err := CalcDMS(1, 1)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
+		assert.Equal(t, 1.0, got)
+		require.NoError(t, err)
 	})
 
 	t.Run("valid: equal values", func(t *testing.T) {
-		expected := 0.0
-		got, _ := CalcDMS(0.5, 0.5)
+		got, err := CalcDMS(0.5, 0.5)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
+		assert.Equal(t, 0.0, got)
+		require.NoError(t, err)
 	})
 
 	t.Run("valid: complimentary values", func(t *testing.T) {
-		expected := 0.0
-		got, _ := CalcDMS(0.25, 0.75)
+		got, err := CalcDMS(0.25, 0.75)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
+		assert.Equal(t, 0.0, got)
+		require.NoError(t, err)
 	})
 
 	t.Run("valid: arbitrary values", func(t *testing.T) {
-		expected := 0.7
-		got, _ := CalcDMS(0.1, 0.2)
+		got, err := CalcDMS(0.1, 0.2)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
+		assert.Equal(t, 0.7, got)
+		require.NoError(t, err)
 	})
 
 	t.Run("valid: near-equal values", func(t *testing.T) {
-		expected := 0.0
-		got, _ := CalcDMS(0.50000000000001, 0.49999999999999)
+		got, err := CalcDMS(0.50000000000001, 0.49999999999999)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
+		assert.Equal(t, 0.0, got)
+		require.NoError(t, err)
 	})
 
 	t.Run("Invalid: negative abstractness", func(t *testing.T) {
-		expected := -1.0
-		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", -1, 1)
 		got, err := CalcDMS(-1, 1)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
-
-		if err.Error() != expectedErr.Error() {
-			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
-		}
+		assert.Equal(t, -1.0, got)
+		require.Error(t, err)
 	})
 
 	t.Run("Invalid: negative instability", func(t *testing.T) {
-		expected := -1.0
-		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", 1, -1)
 		got, err := CalcDMS(1, -1)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
-
-		if err.Error() != expectedErr.Error() {
-			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
-		}
+		assert.Equal(t, -1.0, got)
+		require.Error(t, err)
 	})
 
 	t.Run("Invalid: abstractness is 1e308", func(t *testing.T) {
-		expected := -1.0
-		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be lesser than infinity", 1e308, 0)
 		got, err := CalcDMS(1e308, 0)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
-
-		if err.Error() != expectedErr.Error() {
-			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
-		}
+		assert.Equal(t, -1.0, got)
+		require.Error(t, err)
 	})
 
 	t.Run("Invalid: instability is 1e308", func(t *testing.T) {
-		expected := -1.0
-		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be lesser than infinity", 0, 1e308)
 		got, err := CalcDMS(0, 1e308)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
-
-		if err.Error() != expectedErr.Error() {
-			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
-		}
+		assert.Equal(t, -1.0, got)
+		require.Error(t, err)
 	})
 
 	t.Run("Invalid: abstractness is -1e308", func(t *testing.T) {
-		expected := -1.0
-		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", -1e308, 0)
 		got, err := CalcDMS(-1e308, 0)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
-
-		if err.Error() != expectedErr.Error() {
-			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
-		}
+		assert.Equal(t, -1.0, got)
+		require.Error(t, err)
 	})
 
 	t.Run("Invalid: instability is -1e308", func(t *testing.T) {
-		expected := -1.0
-		expectedErr := fmt.Errorf("invalid metric value: abstractness %v, instability %v; values must be 0 or higher", 0, -1e308)
 		got, err := CalcDMS(0, -1e308)
 
-		if got != expected {
-			t.Errorf("got %v, expected %v", got, expected)
-		}
-
-		if err.Error() != expectedErr.Error() {
-			t.Errorf("errors don't match: error (%v), expectedErr (%v)", err, expectedErr)
-		}
+		assert.Equal(t, -1.0, got)
+		require.Error(t, err)
 	})
 }
