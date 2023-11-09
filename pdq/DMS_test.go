@@ -65,29 +65,15 @@ func TestDMS(t *testing.T) {
 		require.Error(t, err)
 	})
 
-	t.Run("Invalid: abstractness is math.Inf(1)", func(t *testing.T) {
-		got, err := CalcDMS(math.Inf(1), 0)
+	t.Run("Invalid: abstractness is NaN", func(t *testing.T) {
+		got, err := CalcDMS(math.NaN(), 0)
 
 		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
-	t.Run("Invalid: instability is math.Inf(1)", func(t *testing.T) {
-		got, err := CalcDMS(0, math.Inf(1))
-
-		assert.Equal(t, 0.0, got)
-		require.Error(t, err)
-	})
-
-	t.Run("Invalid: abstractness is math.Inf(-1) ", func(t *testing.T) {
-		got, err := CalcDMS(math.Inf(-1), 0)
-
-		assert.Equal(t, 0.0, got)
-		require.Error(t, err)
-	})
-
-	t.Run("Invalid: instability is math.Inf(-1) ", func(t *testing.T) {
-		got, err := CalcDMS(0, math.Inf(-1))
+	t.Run("Invalid: instability is NaN", func(t *testing.T) {
+		got, err := CalcDMS(0, math.NaN())
 
 		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
