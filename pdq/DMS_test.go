@@ -1,6 +1,7 @@
 package pdq
 
 import (
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -64,29 +65,29 @@ func TestDMS(t *testing.T) {
 		require.Error(t, err)
 	})
 
-	t.Run("Invalid: abstractness is 1e308", func(t *testing.T) {
-		got, err := CalcDMS(1e308, 0)
+	t.Run("Invalid: abstractness is math.Inf(1)", func(t *testing.T) {
+		got, err := CalcDMS(math.Inf(1), 0)
 
 		assert.Equal(t, -1.0, got)
 		require.Error(t, err)
 	})
 
-	t.Run("Invalid: instability is 1e308", func(t *testing.T) {
-		got, err := CalcDMS(0, 1e308)
+	t.Run("Invalid: instability is math.Inf(1)", func(t *testing.T) {
+		got, err := CalcDMS(0, math.Inf(1))
 
 		assert.Equal(t, -1.0, got)
 		require.Error(t, err)
 	})
 
-	t.Run("Invalid: abstractness is -1e308", func(t *testing.T) {
-		got, err := CalcDMS(-1e308, 0)
+	t.Run("Invalid: abstractness is math.Inf(-1) ", func(t *testing.T) {
+		got, err := CalcDMS(math.Inf(-1), 0)
 
 		assert.Equal(t, -1.0, got)
 		require.Error(t, err)
 	})
 
-	t.Run("Invalid: instability is -1e308", func(t *testing.T) {
-		got, err := CalcDMS(0, -1e308)
+	t.Run("Invalid: instability is math.Inf(-1) ", func(t *testing.T) {
+		got, err := CalcDMS(0, math.Inf(-1))
 
 		assert.Equal(t, -1.0, got)
 		require.Error(t, err)

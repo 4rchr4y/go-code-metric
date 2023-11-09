@@ -18,7 +18,7 @@ func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
 
 func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (float64, error) {
 	if attributesNum < 0 || methodsNum < 0 {
-		return -1, fmt.Errorf("attributesNum %v, methodsNum %v; values must be >= 0", attributesNum, methodsNum)
+		return -1, fmt.Errorf("attributesNum %d, methodsNum %d; values must be >= 0", attributesNum, methodsNum)
 	}
 
 	if attributesNum == 0 || methodsNum == 0 {
@@ -26,7 +26,7 @@ func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (
 	}
 
 	if attributesNum != len(methodsPerAttribute) {
-		return -1, fmt.Errorf("attributesNum: %v != methodsPerAttribute length: %v", attributesNum, len(methodsPerAttribute))
+		return -1, fmt.Errorf("attributesNum: %d != methodsPerAttribute length: %d", attributesNum, len(methodsPerAttribute))
 	}
 
 	methodsDifferenceSum := 0

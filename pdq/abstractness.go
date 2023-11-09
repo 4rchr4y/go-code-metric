@@ -6,7 +6,7 @@ import (
 
 func CalcAbstractness(abstractElementsNum int, concreteElementsNum int) (float64, error) {
 	if abstractElementsNum < 0 || concreteElementsNum < 0 {
-		return -1, fmt.Errorf("abstractElementsNum %v, concreteElementsNum %v; values must be >= 0", abstractElementsNum, concreteElementsNum)
+		return -1, fmt.Errorf("abstractElementsNum %d, concreteElementsNum%d; values must be >= 0", abstractElementsNum, concreteElementsNum)
 	}
 
 	if concreteElementsNum == 0 {

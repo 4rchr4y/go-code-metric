@@ -6,7 +6,7 @@ import (
 
 func CalcInstability(outgoingDependenciesNum int, incomingDependenciesNum int) (float64, error) {
 	if outgoingDependenciesNum < 0 || incomingDependenciesNum < 0 {
-		return -1, fmt.Errorf("outgoingDependenciesNum %v, incomingDependenciesNum %v; values must be >= 0", outgoingDependenciesNum, incomingDependenciesNum)
+		return -1, fmt.Errorf("outgoingDependenciesNum %d, incomingDependenciesNum %d; values must be >= 0", outgoingDependenciesNum, incomingDependenciesNum)
 	}
 
 	totalDependencies := outgoingDependenciesNum + incomingDependenciesNum
