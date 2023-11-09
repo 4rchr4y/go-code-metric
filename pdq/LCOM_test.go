@@ -60,21 +60,21 @@ func TestCalcLCOM(t *testing.T) {
 	t.Run("invalid: negative non-shared attribute pairs", func(t *testing.T) {
 		got, err := CalcLCOM(-5, 0)
 
-		assert.Equal(t, -1, got)
+		assert.Equal(t, 0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: negative shared attribute pairs", func(t *testing.T) {
 		got, err := CalcLCOM(0, -5)
 
-		assert.Equal(t, -1, got)
+		assert.Equal(t, 0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: both pairs are -math.MaxInt", func(t *testing.T) {
 		got, err := CalcLCOM(-math.MaxInt, -math.MaxInt)
 
-		assert.Equal(t, -1, got)
+		assert.Equal(t, 0, got)
 		require.Error(t, err)
 	})
 }
@@ -151,42 +151,42 @@ func TestCalcLCOM96b(t *testing.T) {
 	t.Run("invalid: attribute count mismatch", func(t *testing.T) {
 		got, err := CalcLCOM96b(2, 3, []int{1, 2, 1})
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: negative attributes", func(t *testing.T) {
 		got, err := CalcLCOM96b(-1, 3, []int{})
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: negative methods", func(t *testing.T) {
 		got, err := CalcLCOM96b(3, -1, []int{})
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: negative value in methods per attribute slice 1", func(t *testing.T) {
 		got, err := CalcLCOM96b(3, 3, []int{-1, 0, 0})
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: negative value in methods per attribute slice 2", func(t *testing.T) {
 		got, err := CalcLCOM96b(3, 3, []int{0, 0, -1})
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: invalid methods per attribute exceeds total", func(t *testing.T) {
 		got, err := CalcLCOM96b(3, 3, []int{99, 1, 1})
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 }

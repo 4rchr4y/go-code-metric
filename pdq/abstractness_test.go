@@ -56,14 +56,14 @@ func TestAbstractness(t *testing.T) {
 	t.Run("Invalid: input -1, 1", func(t *testing.T) {
 		got, err := CalcAbstractness(-1, 1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("Invalid: input 1, -1,", func(t *testing.T) {
 		got, err := CalcAbstractness(1, -1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 }

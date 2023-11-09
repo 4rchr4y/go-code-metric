@@ -54,42 +54,42 @@ func TestDMS(t *testing.T) {
 	t.Run("Invalid: negative abstractness", func(t *testing.T) {
 		got, err := CalcDMS(-1, 1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("Invalid: negative instability", func(t *testing.T) {
 		got, err := CalcDMS(1, -1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("Invalid: abstractness is math.Inf(1)", func(t *testing.T) {
 		got, err := CalcDMS(math.Inf(1), 0)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("Invalid: instability is math.Inf(1)", func(t *testing.T) {
 		got, err := CalcDMS(0, math.Inf(1))
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("Invalid: abstractness is math.Inf(-1) ", func(t *testing.T) {
 		got, err := CalcDMS(math.Inf(-1), 0)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("Invalid: instability is math.Inf(-1) ", func(t *testing.T) {
 		got, err := CalcDMS(0, math.Inf(-1))
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 }

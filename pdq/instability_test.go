@@ -68,21 +68,21 @@ func TestInstability(t *testing.T) {
 	t.Run("invalid: negative abstract", func(t *testing.T) {
 		got, err := CalcInstability(-1, 1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: negative concrete", func(t *testing.T) {
 		got, err := CalcInstability(1, -1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
 	t.Run("invalid: both numbers are negative", func(t *testing.T) {
 		got, err := CalcInstability(-1, -1)
 
-		assert.Equal(t, -1.0, got)
+		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 }
