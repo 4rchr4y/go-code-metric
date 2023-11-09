@@ -18,7 +18,7 @@ func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
 
 func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (float64, error) {
 	if attributesNum < 0 || methodsNum < 0 {
-		return -1, fmt.Errorf("attributesNum %d, methodsNum %d; values must be >= 0", attributesNum, methodsNum)
+		return -1, fmt.Errorf("number of attributes and methods cannot be negative, but got %d, %d", attributesNum, methodsNum)
 	}
 
 	if attributesNum == 0 || methodsNum == 0 {
@@ -26,16 +26,16 @@ func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (
 	}
 
 	if attributesNum != len(methodsPerAttribute) {
-		return -1, fmt.Errorf("attributesNum: %d != methodsPerAttribute length: %d", attributesNum, len(methodsPerAttribute))
+		return -1, fmt.Errorf("number of attributes should be equal to methods per attribute, but got %d, %d", attributesNum, len(methodsPerAttribute))
 	}
 
 	methodsDifferenceSum := 0
 	for i, methodsForAttribute := range methodsPerAttribute {
 		if methodsForAttribute < 0 {
-			return -1, fmt.Errorf("invalid number of methods for attribute at index %d: %d; should be >= 0", i, methodsForAttribute)
+			return -1, fmt.Errorf("number of methods for attribute at index %d: %d, should be >= 0", i, methodsForAttribute)
 		}
 		if methodsForAttribute > methodsNum {
-			return -1, fmt.Errorf("too many methods for attribute at index %d: %d; should be <= methodsNum: %d", i, methodsForAttribute, methodsNum)
+			return -1, fmt.Errorf("too many methods for attribute at index %d: %d, should be <= than methodsNum: %d", i, methodsForAttribute, methodsNum)
 		}
 
 		methodsDifferenceSum += methodsNum - methodsForAttribute
