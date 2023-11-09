@@ -9,8 +9,13 @@ func CalcAbstractness(abstractElementsNum int, concreteElementsNum int) (float64
 		return 0, fmt.Errorf("number of abstract elements and concrete elements cannot be negative, but got %d, %d", abstractElementsNum, concreteElementsNum)
 	}
 
+	totalElements := abstractElementsNum + concreteElementsNum
+	if totalElements == 0 {
+		return 0, nil
+	}
+
 	if concreteElementsNum == 0 {
-		return float64(abstractElementsNum), nil
+		return 1, nil
 	}
 
 	abstractness := float64(abstractElementsNum) / float64(concreteElementsNum)

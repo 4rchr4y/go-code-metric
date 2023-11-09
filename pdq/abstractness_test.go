@@ -31,22 +31,21 @@ func TestAbstractness(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	t.Run("valid: input 4", func(t *testing.T) {
+	t.Run("valid: zero abstract elements", func(t *testing.T) {
 		got, err := CalcAbstractness(0, 20)
 
 		assert.Equal(t, 0.0, got)
 		require.NoError(t, err)
 	})
 
-	t.Run("valid: input 5", func(t *testing.T) {
+	t.Run("valid: zero concrete elements", func(t *testing.T) {
 		got, err := CalcAbstractness(10, 0)
 
-		assert.Equal(t, 10.0, got)
+		assert.Equal(t, 1, got)
 		require.NoError(t, err)
 	})
 
 	t.Run("valid: both values are math.MaxInt32", func(t *testing.T) {
-
 		got, err := CalcAbstractness(math.MaxInt32, math.MaxInt32)
 
 		assert.Equal(t, 1.0, got)
