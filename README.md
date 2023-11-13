@@ -1,3 +1,13 @@
+# Package design quality metrics
+
+### Table of contents:
+
+* [LCOM](#lack-of-cohesion-in-methodslcom)
+* [ LCOM96b ](#lack-of-cohesion-in-methodslcom96b)
+* [ DMS ](#distance-from-the-main-sequencedms)
+* [ Instability ](#instability)
+* [ Abstractness ](#abstractness)
+
 ## Lack of cohesion in methods(LCOM)
 
 $$\text{LCOM} = 
