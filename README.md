@@ -1,7 +1,10 @@
 ## Lack of cohesion in methods(LCOM)
 
-$$ LCOM = 
-\begin{cases}  |P| - |Q|, & \text{if } |P| > |Q| \\ 0, & \text{otherwise} \end{cases} $$
+$$\text{LCOM} = 
+\begin{cases} 
+|P| - |Q|, & \text{if } |P| > |Q| \\
+0, & \text{otherwise} 
+\end{cases}$$
 
 Where:
 
