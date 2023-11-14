@@ -7,6 +7,7 @@
 * [ DMS ](#distance-from-the-main-sequencedms)
 * [ Instability ](#instability)
 * [ Abstractness ](#abstractness)
+* [ AMC ](#average-method-complexityamc)
 
 ## Lack of cohesion in methods(LCOM)
 
@@ -58,3 +59,12 @@ ${\sum m^a}$ - sum of abstract elements (interfaces or abstract classes)
 
 ${\sum m^c}$ - sum of concrete elements (nonabstract classes, structs)
 
+## Average method complexity (AMC)
+
+![AMC](assets/AMC.webp)
+
+Where:
+
+$MC$ - sum of the method complexities
+
+$n$ - total number of methods in a class
