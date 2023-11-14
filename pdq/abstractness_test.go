@@ -9,7 +9,6 @@ import (
 )
 
 func TestAbstractness(t *testing.T) {
-
 	t.Run("valid: input 1", func(t *testing.T) {
 		got, err := CalcAbstractness(30, 10)
 
@@ -41,7 +40,7 @@ func TestAbstractness(t *testing.T) {
 	t.Run("valid: zero concrete elements", func(t *testing.T) {
 		got, err := CalcAbstractness(10, 0)
 
-		assert.Equal(t, 1, got)
+		assert.Equal(t, 1.0, got)
 		require.NoError(t, err)
 	})
 
