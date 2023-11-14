@@ -7,7 +7,7 @@
 * [ DMS ](#distance-from-the-main-sequencedms)
 * [ Instability ](#instability)
 * [ Abstractness ](#abstractness)
-* [ AMC ](#average-method-complexityamc)
+* [ AMC ](#average-method-complexity-amc)
 
 ## Lack of cohesion in methods(LCOM)
 
