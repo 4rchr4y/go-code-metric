@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+// https://github.com/4rchr4y/go-code-metric#lack-of-cohesion-in-methodslcom
+
 func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
 	if nonSharedFields < 0 || sharedFields < 0 {
 		return 0, fmt.Errorf("nonSharedFields %v, nonSharedFields %v; values must be >= 0", nonSharedFields, sharedFields)
@@ -15,6 +17,8 @@ func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
 
 	return 0, nil
 }
+
+// https://github.com/4rchr4y/go-code-metric#lack-of-cohesion-in-methodslcom96b
 
 func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (float64, error) {
 	if attributesNum < 0 || methodsNum < 0 {
