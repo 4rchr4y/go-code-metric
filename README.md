@@ -16,7 +16,7 @@ Reusability index
 
 ## Lack of cohesion in methods(LCOM)
 
-![LCOM](assets/LCOM.webp)
+![LCOM](assets/LCOM.jpg)
 
 Where:
 
@@ -26,7 +26,7 @@ $Q$ - number of method pairs that share at least one class field
 
 ## Lack of cohesion in methods(LCOM96b)
 
-![LCOM96b](assets/LCOM96b.webp)
+![LCOM96b](assets/LCOM96b.jpg)
 
 $a$ - are number of attributes 
 
@@ -36,7 +36,7 @@ $\mu(A_j)$ - the number of methods accessing attribute $Aj$
 
 ## Distance from the main sequence(DMS)
 
-![DMS](assets/DMS.webp)
+![DMS](assets/DMS.jpg)
 
 Where:
 
@@ -46,7 +46,7 @@ $I$ - instability
 
 ## Instability
 
-![Instability](assets/instability.webp)
+![Instability](assets/instability.jpg)
 
 Where:
 
@@ -56,7 +56,7 @@ $C^a$ - number of afferent (or incoming) dependencies
 
 ## Abstractness
 
-![Abstractness](assets/abstractness.webp)
+![Abstractness](assets/abstractness.jpg)
 
 Where:
 
@@ -66,11 +66,11 @@ ${\sum m^c}$ - sum of concrete elements (nonabstract classes, structs)
 
 ## Average method complexity (AMC)
 
-![AMC](assets/AMC.webp)
+![AMC](assets/AMC.jpg)
 
 Where:
 
-$MC$ - sum of the method complexities
+$\sum_{MC}$ - sum of the complexity of all methods in the class
 
 $n$ - total number of methods in a class
 
@@ -99,3 +99,6 @@ $T$ - testability
 $D$ - documentation
 
 $w_1, w_2, w_3, w_4$ — weighting coefficients (the weighting coefficients are determined by the user)
+
+
+![test](assets/rand.jpg)
