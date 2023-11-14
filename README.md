@@ -20,19 +20,19 @@ Reusability index
 
 Where:
 
-$P$ - number of pairs of methods in the class that do not share class fields
+P - number of pairs of methods in the class that do not share class fields
 
-$Q$ - number of method pairs that share at least one class field
+Q - number of method pairs that share at least one class field
 
 ## Lack of cohesion in methods(LCOM96b)
 
 ![LCOM96b](assets/LCOM96b.jpg)
 
-$a$ - are number of attributes 
+a - are number of attributes 
 
-$m$ - are number of methods 
+m - are number of methods 
 
-$\mu(A_j)$ - the number of methods accessing attribute $Aj$
+μ(Aj) - the number of methods accessing attribute Aj
 
 ## Distance from the main sequence(DMS)
 
@@ -40,9 +40,9 @@ $\mu(A_j)$ - the number of methods accessing attribute $Aj$
 
 Where:
 
-$A$ - abstractness
+A - abstractness
 
-$I$ - instability
+I - instability
 
 ## Instability
 
@@ -50,9 +50,9 @@ $I$ - instability
 
 Where:
 
-$C^e$ - number of efferent (or outgoing) dependencies
+C<sup>e</sup> - number of efferent (or outgoing) dependencies
 
-$C^a$ - number of afferent (or incoming) dependencies
+C<sup>a</sup>- number of afferent (or incoming) dependencies
 
 ## Abstractness
 
@@ -60,9 +60,9 @@ $C^a$ - number of afferent (or incoming) dependencies
 
 Where:
 
-${\sum m^a}$ - sum of abstract elements (interfaces or abstract classes)
+∑ m<sup>a</sup> - sum of abstract elements (interfaces or abstract classes)
 
-${\sum m^c}$ - sum of concrete elements (nonabstract classes, structs)
+∑ m<sup>c</sup> - sum of concrete elements (nonabstract classes, structs)
 
 ## Average method complexity (AMC)
 
@@ -70,9 +70,9 @@ ${\sum m^c}$ - sum of concrete elements (nonabstract classes, structs)
 
 Where:
 
-$\sum_{MC}$ - sum of the complexity of all methods in the class
+∑ <sub>MC</sub> - sum of the complexity of all methods in the class
 
-$n$ - total number of methods in a class
+n - total number of methods in a class
 
 ## Cohesion among methods in class (CAM)
 
@@ -80,9 +80,9 @@ $n$ - total number of methods in a class
 
 Where:
 
-$M_{shared}$ - number of method pairs that share attributes
+M <sub>shared</sub> - number of method pairs that share attributes
 
-$M_{total}$ - total number of possible method pairs
+M <sub>total</sub>- total number of possible method pairs
 
 ## Reusability index
 
@@ -90,12 +90,13 @@ $M_{total}$ - total number of possible method pairs
 
 Where:
 
-$C$ - cohesion
+C - cohesion
 
-$K$ - coupling
+K - coupling
 
-$T$ - testability
+T - testability
 
-$D$ - documentation
+D - documentation
 
-$w_1, w_2, w_3, w_4$ — weighting coefficients (the weighting coefficients are determined by the user)
+
+w<sub>1</sub>, w<sub>2</sub>, w<sub>3</sub>, w<sub>4</sub> — weighting coefficients (the weighting coefficients are determined by the user)
