@@ -99,6 +99,3 @@ $T$ - testability
 $D$ - documentation
 
 $w_1, w_2, w_3, w_4$ — weighting coefficients (the weighting coefficients are determined by the user)
-
-
-![test](assets/rand.jpg)
