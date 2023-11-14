@@ -68,3 +68,13 @@ Where:
 $MC$ - sum of the method complexities
 
 $n$ - total number of methods in a class
+
+## Cohesion among methods in class (CAM)
+
+![CAM](assets/CAM.jpg)
+
+Where:
+
+$M_{shared}$ - number of method pairs that share attributes
+
+$M_{total}$ - total number of possible method pairs
