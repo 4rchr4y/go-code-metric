@@ -8,6 +8,11 @@
 * [ Instability ](#instability)
 * [ Abstractness ](#abstractness)
 * [ AMC ](#average-method-complexity-amc)
+* [ CAM ](#cohesion-among-methods-in-class-cam)
+* [ Reusability index ](#reusability-index)
+
+Cohesion among methods in class (CAM)
+Reusability index
 
 ## Lack of cohesion in methods(LCOM)
 
@@ -78,3 +83,19 @@ Where:
 $M_{shared}$ - number of method pairs that share attributes
 
 $M_{total}$ - total number of possible method pairs
+
+## Reusability index
+
+![Reusability index](assets/reusability_index.jpg)
+
+Where:
+
+$C$ - cohesion
+
+$K$ - coupling
+
+$T$ - testability
+
+$D$ - documentation
+
+$w_1, w_2, w_3, w_4$ — weighting coefficients (the weighting coefficients are determined by the user)
