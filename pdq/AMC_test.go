@@ -51,13 +51,6 @@ func TestAMC(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	t.Run("valid: zero total number of methods", func(t *testing.T) {
-		got, err := CalcAMC(10, 0)
-
-		assert.Equal(t, 0.0, got)
-		require.NoError(t, err)
-	})
-
 	t.Run("valid: both values are 0", func(t *testing.T) {
 		got, err := CalcAMC(0, 0)
 
@@ -72,14 +65,21 @@ func TestAMC(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	t.Run("invalid: input -1, 1", func(t *testing.T) {
+	t.Run("invalid: zero total number of methods", func(t *testing.T) {
+		got, err := CalcAMC(1, 0)
+
+		assert.Equal(t, 0.0, got)
+		require.Error(t, err)
+	})
+
+	t.Run("invalid: negative method complexity", func(t *testing.T) {
 		got, err := CalcAMC(-1, 1)
 
 		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
-	t.Run("invalid: input 1, -1,", func(t *testing.T) {
+	t.Run("invalid: negative total number of methods", func(t *testing.T) {
 		got, err := CalcAMC(1, -1)
 
 		assert.Equal(t, 0.0, got)
