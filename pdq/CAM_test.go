@@ -51,13 +51,6 @@ func TestCAM(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	t.Run("valid: zero total number of methods", func(t *testing.T) {
-		got, err := CalcCAM(10, 0)
-
-		assert.Equal(t, 0.0, got)
-		require.NoError(t, err)
-	})
-
 	t.Run("valid: both values are 0", func(t *testing.T) {
 		got, err := CalcCAM(0, 0)
 
@@ -72,14 +65,21 @@ func TestCAM(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	t.Run("invalid: input -1, 1", func(t *testing.T) {
+	t.Run("invalid: zero total number of methods", func(t *testing.T) {
+		got, err := CalcCAM(10, 0)
+
+		assert.Equal(t, 0.0, got)
+		require.Error(t, err)
+	})
+
+	t.Run("invalid: negative shared pairs", func(t *testing.T) {
 		got, err := CalcCAM(-1, 1)
 
 		assert.Equal(t, 0.0, got)
 		require.Error(t, err)
 	})
 
-	t.Run("invalid: input 1, -1,", func(t *testing.T) {
+	t.Run("invalid: negative total possible number of methods pairs", func(t *testing.T) {
 		got, err := CalcCAM(1, -1)
 
 		assert.Equal(t, 0.0, got)
