@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+// CalcInstability calculates the instability of a struct.
+// Returns an error for negative input values.
 // https://github.com/4rchr4y/go-code-metric#instability
 
 func CalcInstability(outgoingDependenciesNum int, incomingDependenciesNum int) (float64, error) {

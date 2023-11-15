@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// CalcAMC calculates the Average Method Complexity of a struct.
+// Returns an error for negative input values
+// or if the total number of methods is 0 but the methods complexity != 0.
 // https://github.com/4rchr4y/go-code-metric#average-method-complexity-amc
 
 func CalcAMC(methodsComplexity int, totalMethodsNum int) (float64, error) {

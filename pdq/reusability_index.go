@@ -5,6 +5,9 @@ import (
 	"math"
 )
 
+// CalcReusabilityIndex calculates the reusability index of a struct.
+// Returns an error for NaN input values
+// or if cohesion, coupling, testability or documentation values are negative.
 // https://github.com/4rchr4y/go-code-metric#reusability-index
 
 func CalcReusabilityIndex(cohesion, coupling, testability, documentation, w1, w2, w3, w4 float64) (float64, error) {
