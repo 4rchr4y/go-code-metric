@@ -4,6 +4,11 @@ import (
 	"fmt"
 )
 
+// CalcLCOM calculates the Lack of Cohesion in Methods of a struct.
+//
+// Returns an error for negative input values.
+//
+// https://github.com/4rchr4y/go-code-metric#lack-of-cohesion-in-methodslcom
 func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
 	if nonSharedFields < 0 || sharedFields < 0 {
 		return 0, fmt.Errorf("nonSharedFields %v, nonSharedFields %v; values must be >= 0", nonSharedFields, sharedFields)
@@ -16,6 +21,13 @@ func CalcLCOM(nonSharedFields int, sharedFields int) (int, error) {
 	return 0, nil
 }
 
+// CalcLCOM96b calculates the Lack of Cohesion in Methods of a struct.
+//
+// Returns an error for negative input values
+// or if attributes don't match the length of methods per attribute array,
+// or if methods per attribute contain invalid values.
+//
+// https://github.com/4rchr4y/go-code-metric#lack-of-cohesion-in-methodslcom96b
 func CalcLCOM96b(attributesNum int, methodsNum int, methodsPerAttribute []int) (float64, error) {
 	if attributesNum < 0 || methodsNum < 0 {
 		return 0, fmt.Errorf("number of attributes and methods cannot be negative, but got %d, %d", attributesNum, methodsNum)
