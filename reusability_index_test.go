@@ -1,4 +1,4 @@
-package pdq
+package gometric
 
 import (
 	"math"
