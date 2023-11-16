@@ -75,7 +75,7 @@ func TestCalcReusabilityIndex(t *testing.T) {
 	t.Run("valid: one weight significantly higher than others", func(t *testing.T) {
 		got, err := CalcReusabilityIndex(0.5, 0.5, 0.5, 0.5, 0.1, 0.1, 0.1, 0.7)
 
-		assert.Equal(t, 0.85, got)
+		assert.Equal(t, 0.5, got)
 		require.NoError(t, err)
 	})
 
